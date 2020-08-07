@@ -10,6 +10,14 @@
       paths:
         - '{{role_path}}/vars'
 
+- name: pinning erlang version
+  become: yes
+  become_user: root
+  shell: |
+    echo 'Package: erlang* esl-erlang
+          Pin: version 1:21.3*
+          Pin-Priority: 999' >> /etc/apt/preferences.d/erlang
+
 - name: install dep pkgs...
   become: yes
   become_user: root
