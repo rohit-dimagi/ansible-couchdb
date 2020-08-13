@@ -15,8 +15,22 @@
   become_user: root
   shell: |
     echo 'Package: erlang* esl-erlang
-          Pin: version 1:21.3*
-          Pin-Priority: 999' >> /etc/apt/preferences.d/erlang
+    Pin: version 1:21.3*
+    Pin-Priority: 999' >> /etc/apt/preferences.d/erlang
+
+- name: import erlang apt key
+  become: yes
+  become_user: root
+  apt_key:
+    url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+    state: present
+
+- name: add erlang repo 
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: deb http://binaries.erlang-solutions.com/debian {{ansible_distribution_release}} contrib
+    state: present
 
 - name: install dep pkgs...
   become: yes
